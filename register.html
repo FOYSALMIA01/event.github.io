@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Confirmation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 5px;
+            background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+            min-height: 100vh; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            margin: 0; 
+            color: #212427;
+        }
+
+        h1 {
+            font-size: 24px; 
+            margin-bottom: 20px; 
+        }
+
+        h3 {
+            margin-top: 20px; 
+            font-size: 20px; 
+        }
+
+        #qrcode {
+            margin: 20px auto; 
+            border: 2px solid #91acf5; 
+            padding: 10px; 
+            border-radius: 10px; 
+            background: #ffffff; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        }
+
+        button {
+            background: linear-gradient(135deg, #4CAF50, #81C784); 
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px; 
+            transition: background-color 0.3s;  
+        }
+
+        button:hover {
+            transform: scale(1.1) ;
+            transition: 0.3s linear;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="greeting"></h1>
+    <h3>Your QR Code:</h3>
+    <div id="qrcode"></div>
+    <button id="downloadBtn">Download QR Code</button>
+
+    <script>
+        // URL থেকে ডেটা নেওয়া
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name');
+        const yourId = urlParams.get('your_id');
+        const phoneNumber = urlParams.get('phone-number');
+        const email = urlParams.get('email');
+        const packageName = urlParams.get('packageName');
+        const price = urlParams.get('packagePrice');
+
+        document.getElementById('greeting').innerText = `Congratulations!\nYour registration is successful. \n Name: ${name} \n ID: ${yourId} \nPackage: ${packageName}  \nPrice: $${price}`;
+
+        var qrData = `Name: ${name}\nYour ID: ${yourId}\nPhone: ${phoneNumber}\nEmail: ${email}\nPackage: ${packageName}\nPrice: ${price}`;
+        const qrCodeContainer = document.getElementById('qrcode');
+
+        // QR কোড তৈরি করা
+        const qrCode = new QRCode(qrCodeContainer, {
+            text: qrData,
+            width: 128,
+            height: 128
+        });
+
+        // QR কোড ডাউনলোড ফাংশন
+        function downloadQRCode() {
+            const qrCanvas = qrCodeContainer.querySelector('canvas');
+            const qrImage = qrCanvas.toDataURL('image/png');
+            const downloadLink = document.createElement('a');
+            downloadLink.href = qrImage;
+            downloadLink.download = 'qr_code.png';
+            downloadLink.click();
+        }
+
+        // বাটনে ক্লিক করলে QR কোড ডাউনলোড হবে
+        document.getElementById('downloadBtn').addEventListener('click', downloadQRCode);
+    </script>
+</body>
+
+</html>

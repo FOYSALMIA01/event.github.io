@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        section#register {
+            background-color: rgb(223, 245, 255);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: clamp(20px, 6vw, 35px);
+            background: linear-gradient(135deg, #f73fc3, #4787f7);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-size: 19px;
+            font-weight: bold;
+            color: #fffcfa;
+            text-shadow: 0 2px 5px #000000;
+        }
+
+        input[type="text"], input[type="tel"], input[type="email"] {
+            width: clamp(15px, 50vw, 250px);
+            padding: 8px;
+            margin-bottom: 10px;
+            background: #e4eff5;
+            border: 2px solid #91acf5;
+            outline: none;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        button.btn {
+            background: linear-gradient(135deg, #f73fc3, #4787f7);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button.btn:hover {
+            background-color: #feb47b;
+        }
+
+        #package-info {
+            font-style: italic;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <section id="register">
+        <form id="registrationForm" action="register.html" method="get">
+            <h2>Event Registration</h2>
+
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="your_id">Your ID:</label>
+            <input type="text" id="your_id" name="your_id" required>
+
+            <label for="phone-number">Phone Number:</label>
+            <input type="tel" id="phone-number" name="phone-number" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <div id="package-info">No package selected.</div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </section>
+
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                packageName: params.get('packageName'),
+                packagePrice: params.get('packagePrice')
+            };
+        }
+
+        const { packageName, packagePrice } = getQueryParams();
+        document.getElementById('package-info').innerText = `Package: ${packageName},\n Price: ${packagePrice}`;
+    </script>
+</body>
+</html>
+
